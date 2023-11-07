@@ -9,7 +9,6 @@ body {
   justify-content: center;
 }
 
-
 .movie-overview{
   visibility: hidden;
 }
@@ -26,10 +25,9 @@ body {
 #back{
   
 }
- 
 
-.movie-container {
-  
+
+.movie-container {  
   width: 250px;
   margin: 16px;
   background-color: #373b69;
