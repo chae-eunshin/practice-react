@@ -1,33 +1,25 @@
-import Detail from "./components/Detail";
+import React from "react";
 import Movie from "./components/Movie";
 import { movies } from "./movie";
+import { GlobalStyle, AppContainer } from "./components/Movie.style";
 
 function App() {
   return (
     <div>
-      <div className="app-container">
-        <div>
-          {movies.results.map((item) => {
-            return (
-              <Movie
-                title= {item.title}
-                poster_path={item.poster_path}
-                vote_average={item.vote_average}
-              />
-            );
-          })}
-        </div>
-        <div>
+    <div>
+    <AppContainer>
         {movies.results.map((item) => {
           return (
-            <Detail
-              overview={item.overview}
+            <Movie
+              title={item.title}
+              poster_path={item.poster_path}
+              vote_average={item.vote_average}
             />
           );
         })}
-      </div>
+      </AppContainer>
     </div>
-  </div>
+    </div>
   );
 }
 

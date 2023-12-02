@@ -1,39 +1,35 @@
-body {
-  background-color: #22254b;
-}
+import styled from 'styled-components';
 
-.app-container {
+export const AppContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
+`;
 
-.movie-container {
+export const MovieContainer = styled.div`
   width: 250px;
   margin: 16px;
   background-color: #373b69;
   color: white;
   border-radius: 5px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-}
+`;
 
-.movie-container img {
+export const MovieImage = styled.img`
   max-width: 100%;
-}
+`;
 
-.movie-info {
+export const MovieInfo = styled.div`
   display: flex;
   padding: 20px;
   justify-content: space-between;
   align-items: center;
-  
-}
+`;
 
-.movie-info h4 {
+export const MovieTitle = styled.h4`
   margin: 0;
-}
+`;
 
-.movie-info span {
+export const MovieInfoText = styled.span`
   margin-left: 3px;
-}
-
+`;
