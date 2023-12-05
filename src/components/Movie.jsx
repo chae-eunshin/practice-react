@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { Component,useState } from "react";
 import { movies } from "./MovieDummy";
 import Detail from '../pages/Detail';
 import { AppContainer, MovieContainer, MovieImage, MovieInfo, MovieTitle, MovieInfoText } from "../Movie.style";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
 
-export default function Movie() {
+/*export default function Movie() { //함수형 컴포넌트는 usestate hook을 사용해서 상태 관리를 해주는데 this.state를 쓰려면 이제 클래스형 컴포넌트를 만들어줘야함
   const [selectedMovies, setSelectedMovies] = useState([]); //기본은 빈 배열 상태
 
   const handleMovieClick = (movie) => {
@@ -44,4 +44,69 @@ export default function Movie() {
       </AppContainer>
     </div>
   );
+}*/
+
+
+// 클래스형 컴포넌트 선언
+export default class Movie extends Component {
+  constructor(props) {
+    super(props);
+    // this.state 초기화
+    this.state = {
+      selectedMovies: [] // 선택된 영화들의 상태를 관리하는 배열
+    };
+  }
+
+  // 영화 클릭 핸들러
+  handleMovieClick = (movie) => {
+    this.setState(prevState => {
+      const isAlreadySelected = prevState.selectedMovies.some(
+        selectedMovie => selectedMovie.id === movie.id
+      );
+
+      if (isAlreadySelected) {
+        // 이미 선택된 영화라면 배열에서 제거
+        return {
+          selectedMovies: prevState.selectedMovies.filter(
+            selectedMovie => selectedMovie.id !== movie.id
+          )
+        };
+      } else {
+        // 새로 선택된 영화라면 배열에 추가
+        return {
+          selectedMovies: [...prevState.selectedMovies, movie]
+        };
+      }
+    });
+  };
+
+  // 영화가 선택되었는지 확인하는 함수
+  isMovieSelected = (movieId) => {
+    return this.state.selectedMovies.some(movie => movie.id === movieId);
+  };
+
+  render() { //렌더 함수가 필수적임. 렌더 함수에서 렌더링(화면에 사용자 인터페이스를 띄우는 것)할 jsx를 반환해줘야하기 때문
+    return ( //컴포넌트의 상태나 속성이 업데이트 될 때마다 렌더 함수를 호출하여 다시 렌더링함 
+      <div>
+        <AppContainer>
+          {movies.results.map((item) => (
+            <MovieContainer key={item.id} onClick={() => this.handleMovieClick(item)}>
+              {this.isMovieSelected(item.id) ? (
+                <Detail overview={this.state.selectedMovies.find(movie => movie.id === item.id).overview} />
+              ) : (
+                <>
+                  <MovieImage src={IMG_BASE_URL + item.poster_path} alt="영화 포스터" />
+                  <MovieInfo>
+                    <MovieTitle>{item.title}</MovieTitle>
+                    <MovieInfoText>{item.vote_average}</MovieInfoText>
+                  </MovieInfo>
+                </>
+              )}
+            </MovieContainer>
+          ))}
+        </AppContainer>
+      </div>
+    );
+  }
 }
+
